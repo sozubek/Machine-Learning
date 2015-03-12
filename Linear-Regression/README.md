@@ -1,5 +1,5 @@
 We implement simple linear regression and multivariate linear regression on the salary data, provided at 
-http://data.princeton.edu/wws509/datasets/#salary
+http://data.princeton.edu/wws509/datasets/#salary .
 The data used is the salary data consisting of observations on six variables for 52 tenure-track professors in a small college.
 
 In linear_reg.py, we implement simple linear regression using gradient descent. The variables used are:
@@ -16,5 +16,6 @@ The variables used are:
 2) number of years since highest degree was earned;
 3) academic year salary, in thousand dollars. 
 We also plot the change in cost function through the iterations of gradient descent. The image is available at:
+
 https://cloud.githubusercontent.com/assets/11430119/6628218/057b27ec-c8da-11e4-953b-75b2a4afbf95.png
 
