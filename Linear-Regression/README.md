@@ -16,5 +16,6 @@ The variables used are:
 2) number of years since highest degree was earned;
 3) academic year salary, in thousand dollars. 
 We also plot the change in cost function through the iterations of gradient descent. The image is available at:
+
 https://cloud.githubusercontent.com/assets/11430119/6628218/057b27ec-c8da-11e4-953b-75b2a4afbf95.png
 
