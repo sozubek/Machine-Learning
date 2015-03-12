@@ -1,6 +1,6 @@
 '''
 We implement simple linear regression using gradient descent. The data used
-is the salary data used in Weisberg's book, consisting of observations on six variables 
+is the salary data used in Weisberg(1985), consisting of observations on six variables 
 for 52 tenure-track professors in a small college. Here we use two of these variables:
 1) number of years since highest degree was earned
 2) academic year salary, in thousand dollars. 
