@@ -17,7 +17,7 @@ from mpl_toolkits.mplot3d import Axes3D
 def getData(filename):	
 	infile = open(filename, 'r')
 	data = np.array([[float(entry) for entry in line.split()] for line in infile])
-	infile.close
+	infile.close()
 	X = data[:,-2]
 	y = data[:,-1] / 1000.0
 	return X,y
