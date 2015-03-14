@@ -54,8 +54,7 @@ def plotData(X,y):
 	colors = ['r', 'y']
 	labels = ['Type 1', 'Type 2']
 	for i in range(2):
-		plt.scatter(X[y==i][:,0], X[y==i][:,1], c=colors[i], marker='o', 
-								s=30, label = labels[i])  
+		plt.scatter(X[y==i][:,0], X[y==i][:,1], c=colors[i], marker='o', s=30, label = labels[i])  
 	plt.xlabel('Magnesium content')
 	plt.ylabel('Flavanoid content')
 	plt.title('Classification of Wines')
@@ -89,8 +88,7 @@ def main():
 	args = (X,y)
 	
 	# find the optimal theta using newton-conjugate-gradient method
-	theta = optimize.fmin_ncg(costFunction, initial_theta, 
-								fprime=costGradient, args=args)
+	theta = optimize.fmin_ncg(costFunction, initial_theta, fprime=costGradient, args=args)
 	print 'The cost found by fmin_ncg: %f'%(costFunction(theta,*args))
 	
 	# visualize the decision boundary  	
