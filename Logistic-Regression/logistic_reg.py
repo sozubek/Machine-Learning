@@ -80,7 +80,6 @@ def plotDecisionBoundary(theta, X, y):
 def main():
 	X,y = loadData('wine.data')
 
-	
 	# add intercept term to X
 	m,n = X.shape	
 	X = np.c_[np.ones(m), X]
