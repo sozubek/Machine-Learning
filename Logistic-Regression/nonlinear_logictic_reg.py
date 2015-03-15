@@ -66,8 +66,7 @@ def plotData(X,y):
 	colors = ['y', 'r']
 	labels = ['Type 1', 'Type 2']	
 	for i in range(2):
-		plt.scatter(X[y==i][:,0], X[y==i][:,1], color = colors[i], marker = 'o', 
-									s = 20, label = labels[i]) 
+		plt.scatter(X[y==i][:,0], X[y==i][:,1], color = colors[i], marker = 'o', s = 20, label = labels[i]) 
 	plt.legend()	
 
 
@@ -77,8 +76,7 @@ def plotDecisionBoundary(theta, X, y, Lambda, degree):
 	x1max, x2max = X[:,[1,2]].max(axis=0)
 
 	# make predictions on a grid bordered by the boundary values
-	xx1, xx2 = np.meshgrid(np.linspace(x1min, x1max, 800), 
-								np.linspace(x2min, x2max, 800))
+	xx1, xx2 = np.meshgrid(np.linspace(x1min, x1max, 800), np.linspace(x2min, x2max, 800))
 	Z = mapFeature(np.c_[xx1.ravel(), xx2.ravel()], degree)
 	p = predict(theta, Z)
 	p = p.reshape(xx1.shape)
