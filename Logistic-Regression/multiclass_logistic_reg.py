@@ -69,8 +69,7 @@ def plotData(X,y):
 	colors = ['y', 'r','b']
 	labels = ['Type 1', 'Type 2', 'Type 3']	
 	for i in range(3):
-		plt.scatter(X[y==i][:,0], X[y==i][:,1], color = colors[i], marker = 'o', 
-									s = 20, label = labels[i]) 
+		plt.scatter(X[y==i][:,0], X[y==i][:,1], color = colors[i], marker = 'o', s = 20, label = labels[i]) 
 	plt.xlabel('Malic Acid')
 	plt.ylabel('Nonflavanoid phenols')
 	plt.legend()
@@ -108,8 +107,7 @@ def main():
 	thetas = []
 	for i in range(3):
 		args = (X,(y==i),Lambda)
-		result = optimize.fmin_cg(costFunctionReg, initial_theta,
-					fprime = costGradientReg, args =args, maxiter=500)
+		result = optimize.fmin_cg(costFunctionReg, initial_theta, fprime = costGradientReg, args =args, maxiter=500)
 		thetas.append(result)
 	all_thetas = np.array([entry[:]for entry in thetas])
 
