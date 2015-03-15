@@ -59,7 +59,7 @@ def costGradientReg(theta, *args):
 def predict(all_thetas, X):
 	# calculate the logit value of each sample using the parameters of 
 	# each classifier. pick the class for which the corresponding 
-	# logistic classifier outputs the highest probability
+	# logistic regression classifier outputs the highest probability
 	A = np.dot(all_thetas, X.T)
 	prediction = np.argmax(A, axis=0) 
 	return prediction
