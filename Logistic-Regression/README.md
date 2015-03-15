@@ -18,7 +18,8 @@ In this file we use two features of the data, namely:
 1) Malic acid;
 2) Nonflavanoid phenols.
 Using this information we classify three different types of wine. The plot of the data and decision boundary is
-available at https://cloud.githubusercontent.com/assets/11430119/6658479/d9702684-cb40-11e4-9324-9bf307fd6923.png .
+available at 
+https://cloud.githubusercontent.com/assets/11430119/6658479/d9702684-cb40-11e4-9324-9bf307fd6923.png .
 
 In nonlinear_logistic_reg.py we implement logistic regression to a hypothetical non-linear data (FLAME Data Set) using BFGS method. 
 To account for the non-linearity we add polynomial features. We also use regularization to prevent
