@@ -24,7 +24,7 @@ In nonlinear_logistic_reg.py we implement logistic regression to non-linear data
 To account for the non-linearity we add polynomial features. We also use regularization to prevent
 overfitting. We plot the decision boundary and calculate training accuracy (99.58%).
 The plot of the data and decision boundary is available at 
-https://cloud.githubusercontent.com/assets/11430119/6653492/6076201a-ca6b-11e4-9149-5ebb47d7e07b.png
+https://cloud.githubusercontent.com/assets/11430119/6658618/64d2cfe8-cb45-11e4-8b72-2e69360dbba5.png
 
 The data is the FLAME data set and originates from the following article:
 Fu, L. and E. Medico, FLAME, a novel fuzzy clustering method for the analysis of DNA microarray data. 
