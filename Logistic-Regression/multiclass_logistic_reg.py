@@ -1,6 +1,6 @@
 '''
 We implement logistic regression to multi class data using one-vs-all method. 
-We use regularization to prevent overfitting. Optimization is done using 
+We use regularization to achieve better results. Optimization is done using 
 conjugate-gradient method. We plot the decision boundary and calculate training accuracy (92.70%). 
 The data comes from the Wine Data Set available at 
 https://archive.ics.uci.edu/ml/datasets/Wine .
