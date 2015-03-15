@@ -16,7 +16,7 @@ We use regularization to achieve better results. Optimization is done using conj
 We plot the decision boundary and calculate training accuracy (92.70%). 
 In this file we use two features of the data, namely:
 1) Malic acid;
-2) Nonflavanoid phenols;
+2) Nonflavanoid phenols.
 Using this information we classify three different types of wine. The plot of the data and decision boundary is
 available at https://cloud.githubusercontent.com/assets/11430119/6658479/d9702684-cb40-11e4-9324-9bf307fd6923.png .
 
