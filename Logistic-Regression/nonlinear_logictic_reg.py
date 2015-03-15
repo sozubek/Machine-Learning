@@ -2,7 +2,7 @@
 We implement logistic regression to non-linear data using BFGS method. To account for 
 the non-linearity, we add polynomial features. We also use regularization to prevent
 overfitting. We plot the decision boundary and calculate training accuracy (99.58%).
-The data originates from the following article:
+The data is the FLAME data set and originates from the following article:
 Fu, L. and E. Medico, FLAME, a novel fuzzy clustering method for the analysis of DNA microarray data. 
 BMC bioinformatics, 2007. 8(1): p. 3.  
 The data is available at  http://cs.joensuu.fi/sipu/datasets/ .
