@@ -2,7 +2,6 @@ In polynomial_linear_reg.py, we implement linear regression to nonlinear data us
 
 https://cloud.githubusercontent.com/assets/11430119/6697057/4fab35da-ccc4-11e4-99f1-8b7b6ed7135d.png
 https://cloud.githubusercontent.com/assets/11430119/6697059/51f4dbe8-ccc4-11e4-8612-e6dc36223077.png
-
 The dataset used is the Filip dataset from NIST. It available at: http://www.itl.nist.gov/div898/strd/lls/data/Filip.shtml  
 
 
