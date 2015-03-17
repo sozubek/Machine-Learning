@@ -1,5 +1,16 @@
-We implement simple linear regression and multivariate linear regression on the salary data, provided at 
-http://data.princeton.edu/wws509/datasets/#salary .
+In polynomial_linear_reg.py, we implement linear regression to nonlinear data using regularization. 
+To account for the nonlinearity we add polynomial features to the model. We randomly split the data into training,
+cross-validation and test sets with the ratio 60-20-20. We find the best values for the 
+degree of the polynomial model and the regularization constant via cross-validation error. 
+Finally we evaluate the test error on the test set. We also calculate the cross-validation error 
+as a function of the training set size and plot the learning curve. The optimal parameters yield 
+to a cross-validation error of 0.08863 and a test error of 0.009841.
+
+The data is the Filip dataset from NIST. It available at: 
+http://www.itl.nist.gov/div898/strd/lls/data/Filip.shtml  
+
+
+In linear_reg.py and multi_linear_reg.py, we implement simple linear regression and multivariate linear regression on the salary data, provided at http://data.princeton.edu/wws509/datasets/#salary .
 The salary data consists of observations on six variables for 52 tenure-track professors in a small college.
 
 In linear_reg.py, we implement simple linear regression using gradient descent. The variables used are:
