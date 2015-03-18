@@ -82,7 +82,7 @@ def main():
 	m = X.shape[0]
 	
 	# set the parameters 
-	K = 3					# number of centroids
+	K = 3				# number of centroids
 	max_iters = 100			# maximum iterations for each run of K-Means
 	total_runs = 200		# total number of runs for K-Means  
 	
