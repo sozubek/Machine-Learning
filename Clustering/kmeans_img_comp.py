@@ -82,9 +82,9 @@ def main():
 	
 	# replace each pixel with the centroid assigned to it
 	X_recovered = centroids[idx]
+	X_recovered = X_recovered.reshape(img_shape[0], img_shape[1], img_shape[2])
 	
 	# plot the original image and the compressed image
-	X_recovered = X_recovered.reshape(img_shape[0], img_shape[1], img_shape[2])
 	plotImage(A, X_recovered, K)
 
 	plt.show()
