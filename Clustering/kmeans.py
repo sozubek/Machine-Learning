@@ -17,7 +17,7 @@ import matplotlib.pyplot as plt
 
 def loadData(filename):
 	data = np.genfromtxt(filename)
-	X = data[:,[0,5]]
+	X = data[:,[0,5]]		# to run K-Means on all seven features, take X = data[:,:-1]
 	y = data[:,-1]-1 	
 	return X,y
 	
@@ -62,7 +62,7 @@ def computeCentroids(X, idx, K):
 def runkMeans(X, initial_centroids, max_iters):
 	centroids = initial_centroids
 	previous_centroids = centroids
-	m = X.shape[0]					# number of training examples
+	m = X.shape[0]				# number of training examples
 	K = centroids.shape[0] 			# number of centroids
 	distance = 0.0
 	
@@ -107,7 +107,7 @@ def main():
 			best_result['idx'] = idx
 	
 	
-	# plot original data and the result after clustering 
+	# plot original data and the result after clustering (should be omitted if you run K-Means on all seven features)
 	plt.subplot(121)
 	plotData(X,y)
 	plt.subplot(122)
