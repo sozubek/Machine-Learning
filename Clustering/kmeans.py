@@ -79,7 +79,7 @@ def runkMeans(X, initial_centroids, max_iters):
 
 def main():
 	X,y = loadData('seeds_dataset.txt')
-	m = X.shape[0]
+	m = X.shape[0]			# number of training examples
 	
 	# set the parameters 
 	K = 3				# number of centroids
