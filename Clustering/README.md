@@ -14,5 +14,5 @@ https://cloud.githubusercontent.com/assets/11430119/6716055/1d9d3a9c-cd79-11e4-8
 In kmeans_img_comp, we implement K-Means algorithm for image compression. In this case the number of 
 centroids become the number of colours used in the compressed image. After running the algorithm 
 and computing the centroids, we replace each pixel with the centroid assigned to it. The original image 
-and the compressed version is available at:
+and the compressed version is available at :
 https://cloud.githubusercontent.com/assets/11430119/6719604/1b46e8f6-cd92-11e4-952f-d423bc428282.png
