@@ -1,6 +1,6 @@
 '''
 We implement K-Means algorithm to a real data set which is not linearly separable.
-We run K-means algorithm 500 times and pick the clustering assignment with lowest 
+We run K-means algorithm 200 times and pick the clustering assignment with lowest 
 total distance. We obtain a success rate of 89.52% with respect to the correct labels.
 The data used is the Seeds Data Set from UCI. It contains measurements of geometrical 
 properties of kernels belonging to three different varieties of wheat. The data has
