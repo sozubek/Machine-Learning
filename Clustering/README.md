@@ -9,5 +9,4 @@ with two selected features, namely:
 1) Area;
 2) Asymmetry coefficient.  
 The plot is available at:
-
 https://cloud.githubusercontent.com/assets/11430119/6716055/1d9d3a9c-cd79-11e4-8b31-bfee2faf89c7.png
