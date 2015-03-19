@@ -60,7 +60,7 @@ def gridSearchCV(X, y, kernel):
 	# search for the best value of C over the possible values
 	clf = GridSearchCV(SVC(kernel=kernel), param_grid=parameters, cv=cv)
 	return clf
-#	return clf.best_params_, clf.score(X,y), clf.best_score_
+
 
 
 	
