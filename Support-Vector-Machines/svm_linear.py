@@ -2,7 +2,7 @@
 We implement support vector machine with linear kernel to randomly generated data.
 To find the penalty parameter C of the error term, we do stratified 10-fold cross-validation.
 We find the optimal value of C according to the cross-validation error. We obtain 90% 
-success rate on the training set and 90.18% and success rate on the cross-validation set.  
+success rate on the training set and mean cross-validation score of 90.18%.  
 '''
 
 import numpy as np
@@ -43,14 +43,15 @@ def plotDecisionBoundary(X, y, model, C):
 	
 	# plot the decision boundary according to the model's predictions on the grid
 	plt.contourf(xx1, xx2, Z, cmap=plt.cm.Paired, alpha=0.5)
+	plotData(X,y)	
 	plt.axis([-2.5,2.5,-2.5,2.5])
 	plt.title('SVM with Linear Kernel (C = %.2f)' %(C))
 	
-	plotData(X,y)		
+	
 		
 
 def gridSearchCV(X, y, kernel):
-	# set the values for the parameter to be examined
+	# set the possible values for the parameter to be examined
 	values = [0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30, 100, 300]
 	parameters = dict(C=values)
 	
@@ -58,9 +59,10 @@ def gridSearchCV(X, y, kernel):
 	cv = StratifiedKFold(y=y, n_folds=10)
 	
 	# search for the best value of C over the possible values
-	clf = GridSearchCV(SVC(kernel=kernel), param_grid=parameters, cv=cv)
-	return clf
-
+	grid = GridSearchCV(SVC(kernel=kernel), param_grid=parameters, cv=cv)
+	grid.fit(X, y)
+	
+	return grid.best_params_, grid.score(X,y)*100, grid.best_score_*100
 
 
 	
@@ -74,20 +76,23 @@ def main():
  	# select the kernel
 	kernel = 'linear'
 	
-	# find the best classifier and fit to the model
-	clf = gridSearchCV(X_norm, y, kernel)
-	clf.fit(X_norm, y)
+	# find the best classifier from the grid search
+	params, training_score, cv_score = gridSearchCV(X_norm, y, kernel)
+	C = params['C'] 
+
 				
- 	# plot the decision boundary
- 	C = clf.best_params_['C'] 
+ 	# fit the best model and plot the decision boundary
+	clf = SVC(kernel=kernel, C=C)
+	clf.fit(X_norm, y)
  	plotDecisionBoundary(X_norm, y, clf, C)
  	
  	# report the success rate
- 	print 'The success rate on the training set: %.2f%%' %(clf.score(X_norm,y)*100)
- 	print 'The success rate on the cross-validation set: %.2f%%' %(clf.best_score_*100)
+ 	print 'The success rate on the training set: %.2f%%' %(training_score)
+ 	print 'Mean cross-validation score of the model: %.2f%%' %(cv_score)
  	
 	plt.show()
  	
+ 
  
 if __name__ == '__main__':
 	main()
