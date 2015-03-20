@@ -47,8 +47,6 @@ def plotDecisionBoundary(X, y, model, C, gamma):
 	plt.axis([-2.5,2.5,-2.5,2.5])
 	plt.title('SVM with RBF Kernel (C = %.2f, Gamma = %.2f)' %(C, gamma))
 
-		
-		
 
 def gridSearchCV(X, y, kernel):
 	# set the possible values for the parameters to be examined
@@ -64,12 +62,10 @@ def gridSearchCV(X, y, kernel):
 	
 	return grid.best_params_, grid.score(X,y)*100, grid.best_score_*100
 
-
 	
 def main():
 	X,y = loadData('compound.txt')	 	
  	plotData(X,y)
- 	
  	
  	# normalize features by removing the mean and scaling to unit variance
  	scaler = preprocessing.StandardScaler()
@@ -95,7 +91,6 @@ def main():
 	plt.show()
  	
  	
- 
  
 if __name__ == '__main__':
 	main()
