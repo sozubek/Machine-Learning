@@ -1,5 +1,5 @@
-We implement principal component analysis Seeds Data Set from UCI Machine Learning 
-Repository. We normalize the data, project it to 2D spanned by the eigenvectors.
+In pca.py, we implement principal component analysis to the Seeds Data Set from UCI Machine Learning 
+Repository. We normalize the data and  project it to 2D plane spanned by the eigenvectors.
 We also recover the projected data back to 3D. The plots of the normalized data, 
 the projected data and the recovered data are available at: 
 https://cloud.githubusercontent.com/assets/11430119/6767374/da0fe374-d002-11e4-9b7a-ac65e00e9f8b.png
