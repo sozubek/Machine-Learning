@@ -21,5 +21,6 @@ We pick the number of principal components such that 95% variance is retained.
 We display the first 16 principal components. We also display an example of a handwritten
 digit before and pca is applied. The plots are available at:
 
+https://cloud.githubusercontent.com/assets/11430119/6772413/ae14ce84-d0d3-11e4-9226-c99395792b91.png
 https://cloud.githubusercontent.com/assets/11430119/6772400/37f9605c-d0d3-11e4-8ae4-09f2d12e3c36.png
-https://cloud.githubusercontent.com/assets/11430119/6772401/3fa8e99e-d0d3-11e4-93ae-2ac19af6197b.png
+
