@@ -16,7 +16,7 @@ We apply PCA on the data set with three features, namely:
 
 In pca_mnist.py, we implement principal component analysis with MNIST handwritten digits dataset.
 The data is available at http://www.cs.nyu.edu/~roweis/data.html . 
-In particular we apply pca to the images of digit 9 which consists of 5949 training examples. 
+In particular we apply pca to the image set of the digit 9 which consists of 5949 training examples. 
 We pick the number of principal components such that 95% variance is retained. 
 We display the first 16 principal components. We also display an example of a handwritten
 digit before and pca is applied. The plots are available at:
