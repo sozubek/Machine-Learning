@@ -83,7 +83,7 @@ def computeCost(params, *args):
 	return cost
 	
 	
-def computeGrad(params, *args):
+def computeGradient(params, *args):
 	Y, R, num_users, num_movies, num_features, Lambda\
 		= args[0],args[1],args[2],args[3], args[4], args[5]
 	
@@ -114,11 +114,16 @@ def main():
 	
 	# add some personal ratings
 	my_ratings = addRatings(Y.shape[0])
+
 	print 
 	print 'New user ratings:'
 	print '******************'	
+	max_len = 0
 	for index in np.flatnonzero(my_ratings):
-		print 'Rated %.1f for %s' % (my_ratings[index], movieList[index]) 
+		if len(movieList[index]) > max_len:
+			max_len = len(movieList[index])
+	for index in np.flatnonzero(my_ratings):	
+		print '%s (rated %.1f)' % (movieList[index].ljust(max_len), my_ratings[index]) 
 	
 	# add the new ratings to the data arrays
 	Y = np.c_[my_ratings, Y]
@@ -142,7 +147,7 @@ def main():
 	print 'The algorithm is running. Please wait...'
 	initial_parameters = np.r_[X, Theta].ravel()
 	args = (Y, R, num_users, num_movies, num_features, Lambda)
-	result = optimize.fmin_l_bfgs_b(computeCost, initial_parameters, args = args, fprime =computeGrad)
+	result = optimize.fmin_l_bfgs_b(computeCost, initial_parameters, args = args, fprime =computeGradient)
 	
 	# unfold the results
 	X = result[0][:num_movies*num_features].reshape(num_movies, num_features)
@@ -156,9 +161,13 @@ def main():
 	print 
 	print 'Top Recommendations:'
 	print '*********************'
-	for item in sorted_predictions[:10]:
-		print 'Predicting rating %.1f for the movie %s' %(my_predictions[item], movieList[item])
-
+	max_len = 0
+	for index in sorted_predictions[:10]:
+		if len(movieList[index]) > max_len:
+			max_len = len(movieList[index])
+	for i, index in enumerate(sorted_predictions[:10]):
+		print '%2d) %s (predicted rating %.1f) ' %(i+1, movieList[index].ljust(max_len), my_predictions[index])
+	
 
 if __name__ == '__main__':
 	main()
