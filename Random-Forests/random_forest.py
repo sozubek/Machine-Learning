@@ -57,7 +57,7 @@ def main():
 	clf = RandomForestClassifier(n_estimators=n_estimators, max_features=max_features) 
 	clf.fit(X_train, y_train)
 	
-	# report the training and test errors
+	# report the training and test scores
 	print 'Accuracy on the test set: %.2f%%' %(clf.score(X_test,y_test)*100) 
 	print 'Accuracy on the training set: %.2f%%\n' %(clf.score(X_train,y_train)*100) 
 	
