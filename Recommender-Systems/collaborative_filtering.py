@@ -118,10 +118,7 @@ def main():
 	print 
 	print 'New user ratings:'
 	print '******************'	
-	max_len = 0
-	for index in np.flatnonzero(my_ratings):
-		if len(movieList[index]) > max_len:
-			max_len = len(movieList[index])
+	max_len = max(len(s) for s in movieList[np.flatnonzero(my_ratings)])
 	for index in np.flatnonzero(my_ratings):	
 		print '%s (rated %.1f)' % (movieList[index].ljust(max_len), my_ratings[index]) 
 	
@@ -161,10 +158,7 @@ def main():
 	print 
 	print 'Top Recommendations:'
 	print '*********************'
-	max_len = 0
-	for index in sorted_predictions[:10]:
-		if len(movieList[index]) > max_len:
-			max_len = len(movieList[index])
+	max_len = max(len(s) for s in movieList[sorted_predictions[:10]])
 	for i, index in enumerate(sorted_predictions[:10]):
 		print '%2d) %s (predicted rating %.1f) ' %(i+1, movieList[index].ljust(max_len), my_predictions[index])
 	
