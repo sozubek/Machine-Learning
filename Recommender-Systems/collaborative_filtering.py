@@ -102,11 +102,9 @@ def computeGradient(params, *args):
 	
 def main():
 
-	# Y is the ratings array of shape num_movies x num_users. A row of Y carries
-	# of the ratings of specific movie by all users, a column of Y has the ratings of a 
-	# specific user for all movies.
-	# R is the binary ratings array. R[i,j] = 0 if user j has not rated movie i and 
-	# R[i,j] = 1 otherwise     
+	# Y is the ratings array of shape num_movies x num_users. A row of Y carries of the ratings of a specific movie 
+	# by all users, a column of Y has the ratings of a specific user for all movies.
+	# R is the binary ratings array. R[i,j] = 0 if user j has not rated movie i and R[i,j] = 1 otherwise     
 	Y, R = loadRatings('u.data')
 	
 	# movieList contains the names of the movies being rated
@@ -133,7 +131,7 @@ def main():
 	num_movies = Y.shape[0]
 	num_users = Y.shape[1]
 	num_features = 10 		
-	Lambda = 10					# regularization parameter	
+	Lambda = 10			# regularization parameter	
 	
 	# set initial parameters X and Theta randomly
 	X = np.random.randn(num_movies, num_features)
