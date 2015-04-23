@@ -1,6 +1,6 @@
 '''
 We implement an anomaly detection algorithm with the Thyroid Data Set from UCI
-Machine Learning Repository. We fit the a multivariate Gaussian distribution to 
+Machine Learning Repository. We fit a multivariate Gaussian distribution to 
 the normal samples of the data. We select the threshold probability epsilon by 
 comparing F1 scores obtained on the cross-validation set which contains both normal
 and abnormal samples. The samples with probability less than epsilon are marked as 
@@ -40,7 +40,7 @@ def multivariateGaussian(X, mu, sigma):
 
 	
 def selectThreshold(y_cv, prob_cv):
-	# choose a threshold epsilon by comparing F1 scores on the cross-validation set.
+	# choose a threshold probability epsilon by comparing F1 scores on the cross-validation set.
 	# (we mark a sample x as an anomaly if the probability of x is less than epsilon.)
 	best_epsilon = 0
 	best_F1 = 0
@@ -119,15 +119,15 @@ def main():
 	# calculate the probabilities of samples in the cross-validation set,
 	prob_cv = multivariateGaussian(X_cv, mu, sigma)
 	
-	# choose the threshold epsilon by comparing F1 scores on the cross-validation set
+	# choose the threshold probability epsilon by comparing F1 scores on the cross-validation set
 	epsilon, F1 = selectThreshold(y_cv, prob_cv)
-	print 'Best F1 found using cross vailidation %f' %(F1)	
+	print 'Best F1 score found using cross vailidation %f' %(F1)	
 	print 'The epsilon that corresponds to the best F1 score is %e' %(epsilon)
 
 	# find the samples with probability less than epsilon and mark them as anomalies 
 	prob = multivariateGaussian(X, mu, sigma)		
 	anomalies = X[prob < epsilon]
-	print 'Anomalies found: %d' %(anomalies.shape[0])
+	print 'Number of anomalies found: %d' %(anomalies.shape[0])
 	plotAnomalies(anomalies,X)
 	
 	plt.show()	
