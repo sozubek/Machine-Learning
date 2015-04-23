@@ -1,5 +1,5 @@
 In anomaly.py, we implement an anomaly detection algorithm with the Thyroid Data Set from UCI
-Machine Learning Repository. We fit the a multivariate Gaussian distribution to 
+Machine Learning Repository. We fit a multivariate Gaussian distribution to 
 the normal samples of the data. We select the threshold probability epsilon by 
 comparing F1 scores obtained on the cross-validation set which contains both normal
 and abnormal samples. The samples with probability less than epsilon are marked as 
