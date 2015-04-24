@@ -5,7 +5,7 @@ cross-validation and test sets with the ratio 60-20-20. We find the best values 
 degree of the polynomial model and the regularization constant via cross-validation error. 
 Finally we evaluate the test error on the test set. We also calculate the cross-validation error 
 as a function of the training set size and plot the learning curve. The optimal parameters yield 
-to a cross-validation error of 0.08863 and a test error of 0.009841.
+to a cross-validation error of 0.88% and a test error of 0.98%.
 
 The data is the Filip dataset from NIST. It available at: 
 http://www.itl.nist.gov/div898/strd/lls/data/Filip.shtml  
