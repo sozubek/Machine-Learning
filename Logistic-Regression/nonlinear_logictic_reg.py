@@ -29,12 +29,13 @@ def costFunctionReg(theta, *args):
 	X, y, Lambda = args[0], args[1], args[2]
 	m = len(y)
 
-	# A is an auxiliary matrix to get rid of theta[0] during regularization
-	A = np.eye(len(theta)) 
-	A[0,0] = 0
+	# reg_theta is used for regularization. it is equal to theta except that reg_theta[0]=0
+	reg_theta = np.copy(theta)
+	reg_theta[0] = 0
 	
+	# cost function with regularization
 	cost = (1.0 / m) * (np.dot(-y.T, np.log(sigmoid(np.dot(X, theta)))) - np.dot(1-y.T, np.log(1 - sigmoid(np.dot(X, theta)))))\
-	      + Lambda / (2 * m) * np.dot(np.dot(A, theta).T, np.dot(A, theta))
+	      + Lambda / (2 * m) * np.dot(reg_theta, reg_theta)
 	return cost
 	
 	
@@ -42,12 +43,13 @@ def costGradientReg(theta, *args):
 	X, y, Lambda = args[0], args[1], args[2]
 	m = len(y)
 
-	# A is an auxiliary matrix to get rid of theta[0] during regularization
-	A = np.eye(len(theta)) 
-	A[0,0] = 0
+	# reg_theta is used for regularization. it is equal to theta except that reg_theta[0]=0
+	reg_theta = np.copy(theta)
+	reg_theta[0] = 0
 	
+	# gradient with regularization
 	grad = (1.0 / m) * np.dot(X.T, sigmoid(np.dot(X, theta)) - y)\
-	       + (Lambda / m) * np.dot(A, theta)
+	       + (Lambda / m) * reg_theta
 	return grad
 
 
@@ -71,7 +73,7 @@ def plotData(X,y):
 
 
 def plotDecisionBoundary(theta, X, y, Lambda, degree):
-	# find the boundary values for the features
+	# find the boundary values for each feature
 	x1min, x2min = X[:,[1,2]].min(axis=0)
 	x1max, x2max = X[:,[1,2]].max(axis=0)
 
