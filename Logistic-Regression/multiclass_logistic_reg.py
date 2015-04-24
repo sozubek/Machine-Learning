@@ -33,9 +33,8 @@ def costFunctionReg(theta, *args):
 	m = len(y)
 	
 	# reg_theta is used for regularization. it is equal to theta except that reg_theta[0]=0
-	A = np.eye(len(theta)) 
-	A[0,0] = 0
-	reg_theta = np.dot(A, theta)
+	reg_theta = np.copy(theta)
+	reg_theta[0] = 0
 	
 	# cost function with regularization	
 	cost = 1.0 / m * (-np.dot(y, np.log(sigmoid(np.dot(X, theta)))) - np.dot(1-y, np.log(1-sigmoid(np.dot(X,theta)))))\
@@ -49,12 +48,11 @@ def costGradientReg(theta, *args):
 	m = len(y)
 
 	# reg_theta is used for regularization. it is equal to theta except that reg_theta[0]=0
-	A = np.eye(len(theta)) 
-	A[0,0] = 0
-	reg_theta = np.dot(A, theta)
+	reg_theta = np.copy(theta)
+	reg_theta[0] = 0
 	
-	grad = (1.0 / m) * np.dot(X.T, sigmoid(np.dot(X, theta)) - y)\
-	       + (Lambda / m) * reg_theta
+	# gradient with regularization
+	grad = (1.0 / m) * np.dot(X.T, sigmoid(np.dot(X, theta)) - y) + (Lambda / m) * reg_theta
 
 	return grad
 
