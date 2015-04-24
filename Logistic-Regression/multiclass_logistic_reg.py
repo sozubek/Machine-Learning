@@ -61,8 +61,8 @@ def predict(all_thetas, X):
 	# calculate the logit value of each sample using the parameters of 
 	# each classifier. pick the class for which the corresponding 
 	# logistic regression classifier outputs the highest probability
-	A = np.dot(all_thetas, X.T)
-	prediction = np.argmax(A, axis=0) 
+	probabilities = np.dot(all_thetas, X.T)
+	prediction = np.argmax(probabilities, axis=0) 
 	return prediction
 	
 	
@@ -108,9 +108,9 @@ def main():
 	thetas = []
 	for i in range(3):
 		args = (X,(y==i),Lambda)
-		result = optimize.fmin_cg(costFunctionReg, initial_theta, fprime = costGradientReg, args =args, maxiter=500)
-		thetas.append(result)
-	all_thetas = np.array([entry[:]for entry in thetas])
+		opt_theta = optimize.fmin_cg(costFunctionReg, initial_theta, fprime = costGradientReg, args =args, maxiter=500)
+		thetas.append(opt_theta)
+	all_thetas = np.array([opt_theta[:]for opt_theta in thetas])
 
 	# calculate the training accuracy
 	pred = predict(all_thetas, X)
