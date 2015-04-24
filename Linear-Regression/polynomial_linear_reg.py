@@ -69,11 +69,9 @@ def linearRegCostFunction(theta, *args):
 	X, y, Lambda = args[0], args[1], args[2]
 	m, n = X.shape
 	
-	# we do not regularize theta_0. for that reason we use reg_theta 
-	# which is the same as theta except theta_0 = 0 
-	A = np.eye(n)
-	A[0,0] = 0
-	reg_theta = np.dot(A, theta) 
+	# reg_theta is used for regularization. it is equal to theta except that reg_theta[0]=0
+	reg_theta = np.copy(theta)
+	reg_theta[0] = 0
 	
 	# compute the cost 
 	error = np.dot(X, theta) - y
@@ -85,11 +83,9 @@ def linearRegGradFunction(theta, *args):
 	X, y, Lambda = args[0], args[1], args[2]
 	m, n = X.shape
 	
-	# we do not regularize theta_0. for that reason we use reg_theta 
-	# which is the same as theta except theta_0 = 0 
-	A = np.eye(n)
-	A[0,0] = 0
-	reg_theta = np.dot(A, theta) 
+	# reg_theta is used for regularization. it is equal to theta except that reg_theta[0]=0
+	reg_theta = np.copy(theta)
+	reg_theta[0] = 0
 	
 	# compute the gradient
 	error = np.dot(X, theta) - y
