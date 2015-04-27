@@ -107,7 +107,7 @@ def main():
 			best_result['idx'] = idx
 	
 	
-	# plot original data and the result after clustering (should be omitted if you run K-Means on all seven features)
+	# plot original data and the result after clustering (should be omitted if we run K-Means on all seven features)
 	plt.subplot(121)
 	plotData(X,y)
 	plt.subplot(122)
