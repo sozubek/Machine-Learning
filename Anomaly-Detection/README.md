@@ -6,6 +6,7 @@ comparing F1 scores obtained on the cross-validation set which contains both nor
 and abnormal samples. The samples with probability less than epsilon are marked as 
 anomalies. The plot of the normal samples with the fitted multivariate Gaussian distribution and 
 the plot of the anomalies are available at:
+
 https://cloud.githubusercontent.com/assets/11430119/6807443/e3347400-d224-11e4-811e-4b916fd163d3.png
 
 https://cloud.githubusercontent.com/assets/11430119/6807442/e33270ba-d224-11e4-8eb8-0621a80a20ad.png
