@@ -1,4 +1,4 @@
-In anomaly.py, we implement an anomaly detection algorithm with the Thyroid Data Set from UCI
+In anomaly.py, we implement an anomaly detection algorithm on the Thyroid Data Set from UCI
 Machine Learning Repository using Python, Numpy, Scikit-Learn and Matplotlib.
 We fit a multivariate Gaussian distribution to 
 the normal samples of the data. We select the threshold probability epsilon by 
