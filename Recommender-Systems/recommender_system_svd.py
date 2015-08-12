@@ -465,8 +465,8 @@ def main():
 	
 	''' PICK MOVIES FOR SERENDIPITY'''
 	'''
-	n = 20		# pick a movie outside the user's top n
-	m = 20		# consider top m movies of the neighbours for serendipity 
+	n = 30		# pick a movie outside the user's top n
+	m = 10		# consider top m movies of the neighbours for serendipity 
 	predictions = predictions_SVD
 	user_corr = np.corrcoef(U)
 	user_id = 10
