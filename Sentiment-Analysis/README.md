@@ -19,4 +19,5 @@ grid search using F1-score on 10-fold cross-validation.
 
 As a result we get the mean accuracy of the model on the test set as 0.874 and the mean
 F1-score as 0.837. The mean area under the precision/recall curve is 0.90. We plot the 
-the precision/recall curve for the median auc found which is 0.93.
+the precision/recall curve for the median auc found which is 0.93. The image of the plot is available at
+https://cloud.githubusercontent.com/assets/11430119/9692142/0ce9117c-5315-11e5-8dbd-4204ba5eae7d.png
