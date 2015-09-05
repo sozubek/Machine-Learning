@@ -1,4 +1,10 @@
-In 
+In recommender_system_svd.py, we use singular value decomposition to create a movie recommender system on MovieLens dataset.
+- We find the best rank approximation of the ratings matrix using RMSE. 
+- We interpret the latent features by exploring genre data on movies and gender data on users. 
+- We calculate Precision@N metric which is the percentage of movies the user rated above a certain threshold in the recommendation list of size n. 
+- To assess the ranking quality of the recommendation list we compute normalized discounted cumulative gain. This metric provides a comparison between the current recommendation list at hand and the perfectly ranked list. 
+- We diversify the recommendations by using a similarity score on the list. Lower similarity scores correspond to more diverse recommendations. Here the business objective is to provide users a wider range of choices. 
+- Lastly we create serendipity for the users by recommending movies that they do not expect or know about but eventually they will like. Here we use user's closest neighbours in terms of their similarity. We pick movies from the close neighbours' recommendation lists that do not appear in the current user's top recommendations.
 
 ***********************************************************
 In collaborative_filtering.py, we implement a movie recommender system by creating a low rank factorization 
