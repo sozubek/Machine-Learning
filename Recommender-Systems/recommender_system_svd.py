@@ -88,7 +88,7 @@ def loadUserInfo(filename):
 def getFeatureCompositions_Movies(feature_index, V, movieGenres, movieNames):
 	'''
 	Given a feature obtains the genres of the top 15 movies with the largest coefficients
-	in that feature. Uses TF-IDF to assess the relevance of the these genres.
+	in that feature. Uses TF-IDF to assess the relevance of these genres.
 	'''
 	genreNames = loadGenreNames('u.genre')
 	idfGenres = np.log(np.sum(movieGenres) / np.sum(movieGenres, axis=0)) 
@@ -237,7 +237,6 @@ def computeRMSE(R, B, predictions):
 def get_best_RMSE_model_SVD(R_cv, B_cv, Rmean_movie, U, S, Vt, ranks):
 	'''
 	Finds the rank of the SVD approximation which produces the least root mean square error
-	on the cross-validation set.
 	'''
 	best_RMSE = np.inf
 	best_rank = -1
@@ -265,8 +264,7 @@ def get_best_RMSE_model_SVD(R_cv, B_cv, Rmean_movie, U, S, Vt, ranks):
 def computePrecision(R_cv, B_cv, predictions, threshold, n):			
 	'''
 	Computes Precision@N metric on the cross-validation set.
-	Precision@N is the percentage of movies the user rated above threshold 
-	in the recommendation list of size n
+	Precision@N is the percentage of movies the user rated above threshold in the recommendation list of size n
 	'''
 	
 	cv_predictions = np.multiply(predictions, B_cv)
@@ -296,7 +294,6 @@ def computePrecision(R_cv, B_cv, predictions, threshold, n):
 def get_best_precision_model_SVD(R_cv, B_cv, U, S, Vt, Rmean_movie, ranks):
 	'''
 	Finds the rank of the SVD approximation which produces the best precision@n score
-	on the cross-validation set.
 	'''
 	list_length = 10	# length of the recommendation list
 	threshold = 3.5		# take predictions above threshold as a recommendation for good movies
