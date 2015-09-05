@@ -3,7 +3,7 @@ from scipy import sparse
 import scipy.linalg as linalg
 import operator
 import matplotlib.pyplot as plt
-import Rec_Sys_USER
+
 
 
 def loadRatings(filename):
@@ -57,6 +57,9 @@ def loadRatings(filename):
 	
 	
 def loadMovieInfo(filename):
+	'''
+	Loads the movie names and the genre information	
+	'''
 	infile = open(filename, 'r')
 	movieNames = np.array([line.split('|')[1] for line in infile])	
 	infile.close()
@@ -66,13 +69,16 @@ def loadMovieInfo(filename):
 	return movieNames, movieGenres		
 	
 	
-def loadGenreInfo(filename):
+def loadGenreNames(filename):
 	infile = open(filename, 'r')
 	genreNames = np.array([line.split('|')[0] for line in infile])	
 	return genreNames
 
 
 def loadUserInfo(filename):	
+	'''
+	Loads user's genders
+	'''
 	infile = open(filename, 'r')
 	genders = np.array([line.split('|')[2] for line in infile])	
 	genders = (genders == 'F')
@@ -80,7 +86,11 @@ def loadUserInfo(filename):
 	
 
 def getFeatureCompositions_Movies(feature_index, V, movieGenres, movieNames):
-	genreNames = loadGenreInfo('u.genre')
+	'''
+	Given a feature obtains the genres of the top 15 movies with the largest coefficients
+	in that feature. Uses TF-IDF to assess the relevance of the these genres.
+	'''
+	genreNames = loadGenreNames('u.genre')
 	idfGenres = np.log(np.sum(movieGenres) / np.sum(movieGenres, axis=0)) 
 
 	# sort the movies wrt the their scores on the movie-feature matrix
@@ -114,6 +124,11 @@ def getFeatureCompositions_Movies(feature_index, V, movieGenres, movieNames):
 
 
 def getFeatureCompositions_Genders(feature_index, U):
+	'''
+	Given a feature obtains the genders of the top 10 people with the largest coefficients
+	in that feature. Uses TF-IDF to assess the relevance of the gender information.
+	'''
+	
 	userGenders = loadUserInfo('u.user')	 	
 	
 	num_total = float(len(userGenders))
@@ -149,6 +164,7 @@ def normalizeRatings(R, B):
 	Rmean_user = (np.sum(R, axis=1) / np.sum(B, axis=1))[:,np.newaxis]	
 	std = np.std(R, axis=1)[:,np.newaxis]
 	Rnorm_user = (R - Rmean_user) * B
+	
 	R_norm_user_std = ((R - Rmean_user) * B) / std
 	
 	
@@ -167,6 +183,9 @@ def normalizeRatings(R, B):
 			
 
 def svd(R):
+	'''
+	Returns singular value decomposition of the ratings matrix
+	'''
 	U, S, Vt = linalg.svd(R, full_matrices=False)
 	k = len(S) 
 	S = linalg.diagsvd(S, k, k)
@@ -174,6 +193,9 @@ def svd(R):
 
 
 def reduceRank(U, S, Vt, n):
+	'''
+	Reduces the rank of the matrices in SVD factorization to the specified number n.
+	'''
 	# reduce the matrices to rank n
 	U_reduce = U[:, range(n)]
 	Vt_reduce = Vt[range(n), :]
@@ -183,7 +205,9 @@ def reduceRank(U, S, Vt, n):
 
 
 def computeRMSE(R, B, predictions):	
-	# compute the mean squared error between the actual ratings and the predictions 
+	'''
+	Computes the root mean square error between the actual ratings and the predictions 
+	'''
 	
 	# ************ This is MSE where each user counts the same		
 	sum_errors = 0
@@ -211,6 +235,10 @@ def computeRMSE(R, B, predictions):
 	
 						
 def get_best_RMSE_model_SVD(R_cv, B_cv, Rmean_movie, U, S, Vt, ranks):
+	'''
+	Finds the rank of the SVD approximation which produces the least root mean square error
+	on the cross-validation set.
+	'''
 	best_RMSE = np.inf
 	best_rank = -1
 	RMSE_list = []
@@ -235,8 +263,11 @@ def get_best_RMSE_model_SVD(R_cv, B_cv, Rmean_movie, U, S, Vt, ranks):
 	
 	
 def computePrecision(R_cv, B_cv, predictions, threshold, n):			
-	# checks percentage of movies the user rated above rating_threshold 
-	# in the recommendation list of size n
+	'''
+	Computes Precision@N metric on the cross-validation set.
+	Precision@N is the percentage of movies the user rated above threshold 
+	in the recommendation list of size n
+	'''
 	
 	cv_predictions = np.multiply(predictions, B_cv)
 	sorted_predictions = np.fliplr(np.sort(cv_predictions))[:,:n]	
@@ -263,9 +294,12 @@ def computePrecision(R_cv, B_cv, predictions, threshold, n):
 
 
 def get_best_precision_model_SVD(R_cv, B_cv, U, S, Vt, Rmean_movie, ranks):
+	'''
+	Finds the rank of the SVD approximation which produces the best precision@n score
+	on the cross-validation set.
+	'''
 	list_length = 10	# length of the recommendation list
-	threshold = 3.5		# take predictions above threshold as 
-						# a recommendation for good movies
+	threshold = 3.5		# take predictions above threshold as a recommendation for good movies
 	
 	best_precision = 0
 	best_rank = -1
@@ -291,11 +325,13 @@ def get_best_precision_model_SVD(R_cv, B_cv, U, S, Vt, Rmean_movie, ranks):
 
 
 def computeNDCG(R_cv, B_cv, predictions):
-	# calculates the normalized discounted cumulative gain for top n movies 
+	''' 
+	Calculates the normalized discounted cumulative gain for top n movies in the
+	recommendation list.
+	'''
 	
 	n = 10 	# the number of movies in our prediction list to compute NDCG on
 	cv_predictions = np.multiply(predictions, B_cv)
-	sorted_predictions = np.fliplr(np.sort(cv_predictions))[:,:n]	
 	top_indices = np.fliplr(np.argsort(cv_predictions))[:,:n]
 	
 	num_users = R_cv.shape[0]
@@ -303,10 +339,10 @@ def computeNDCG(R_cv, B_cv, predictions):
 	NDCG = np.zeros(num_users, dtype=float)	
 	
 	for user_id in range(num_users):
-		actual_votes = R_cv[user_id,top_indices[user_id]]
-		sorted_actual_votes = np.sort(R_cv[user_id,top_indices[user_id]])[::-1]
-		DCG = np.dot(actual_votes, discount_factors)
-		IDCG = np.dot(sorted_actual_votes, discount_factors)
+		actual_ratings = R_cv[user_id,top_indices[user_id]]
+		sorted_actual_ratings = np.sort(actual_ratings)[::-1]
+		DCG = np.dot(actual_ratings, discount_factors)
+		IDCG = np.dot(sorted_actual_ratings, discount_factors)
 		NDCG[user_id] = DCG / IDCG
 							
 	mean_NDCG = np.mean(NDCG)
@@ -314,17 +350,11 @@ def computeNDCG(R_cv, B_cv, predictions):
 
 
 
-def printList(user_id, movieNames, predictions, sorted_indices, length):
-	pred = predictions[user_id]
-	print 'Top Recommendations:'
-	print '*********************'
-	max_len = max(len(s) for s in movieNames[sorted_indices[:length]])
-	for i, index in enumerate(sorted_indices[:length]):
-		print '%2d) %s (predicted rating %.1f) ' %(i+1, movieNames[index].ljust(max_len), pred[index])
-
-
-
 def diversifyList(user_id, predictions, U, V):
+	'''
+	Diversifies the recommendation list by using a intra-list similarity metric.
+	'''
+	
 	n = 20	# no of movies to be used in diversification
 	k = 10	# no of movies to be in the output list
 
@@ -365,6 +395,65 @@ def diversifyList(user_id, predictions, U, V):
 
 
 
+def createSerendipity(predictions, user_corr, R_train_mean_movie, movieNames):
+	'''
+	Creates serendipity by choosing movies from a user's closest neighbours.
+	Similarity of users are computed using Pearson correlation. Finds the movies which
+	are in the user's neighbour's top 20 list but not in his/her top 20 list.
+	'''
+	n = 20		# pick a movie outside the user's top n
+	m = 20		# consider top m movies of the neighbours for serendipity 
+	user_id = 10
+	recommended_movies = (np.argsort(predictions[user_id])[::-1])[:n]	
+	
+	# pick top 10 similar users to the given user
+	similar_users = (np.argsort(user_corr[user_id])[::-1])[1:11]
+
+	# search the top m recommendations of the neighbours to find movies
+	# that do not appear in the top n recommendations of the given user
+	additional_movies = {}
+	for neighbour in similar_users:
+		neighbour_movies = (np.argsort(predictions[neighbour])[::-1])[:m]	
+		difference = np.setdiff1d(neighbour_movies, recommended_movies)
+		for movie in difference:
+			additional_movies[movie] = max(predictions[user_id, movie] - R_train_mean_movie[movie], 0) * (predictions[user_id, difference[0]] >= 3.5)
+	
+	# print 'THE ORIGINAL LIST:'
+	printList(user_id, movieNames, predictions, recommended_movies, 10)
+	print 
+		
+	sorted_additional = sorted(additional_movies.items(), key=operator.itemgetter(1))
+	max_len = max(len(s) for s in [movieNames[sorted_additional[-1][0]], movieNames[sorted_additional[-2][0]], movieNames[sorted_additional[-3][0]] ])
+	print 
+	print 'Movies to create serendipity:'
+	print '******************************'	
+	print '%s	predicted rating:%.2f  		average movie rating:%.2f' %(movieNames[sorted_additional[-1][0]].ljust(max_len), predictions[user_id, sorted_additional[-1][0]], R_train_mean_movie[sorted_additional[-1][0]]) 
+	print '%s	predicted rating:%.2f 		average movie rating:%.2f' %(movieNames[sorted_additional[-2][0]].ljust(max_len), predictions[user_id, sorted_additional[-2][0]], R_train_mean_movie[sorted_additional[-2][0]]) 
+	print '%s	predicted rating:%.2f 		average movie rating:%.2f' %(movieNames[sorted_additional[-3][0]].ljust(max_len), predictions[user_id, sorted_additional[-3][0]], R_train_mean_movie[sorted_additional[-3][0]]) 
+	
+	
+
+
+def printList(user_id, movieNames, predictions, sorted_indices, length):
+	pred = predictions[user_id]
+	print 'Top Recommendations:'
+	print '*********************'
+	max_len = max(len(s) for s in movieNames[sorted_indices[:length]])
+	for i, index in enumerate(sorted_indices[:length]):
+		print '%2d) %s (predicted rating %.1f) ' %(i+1, movieNames[index].ljust(max_len), pred[index])
+
+
+
+def printDiversifiedList(user_id, movieNames, predictions, recommended_movies, new_rec_list, length):
+	print 'THE ORIGINAL LIST:'
+	printList(user_id, movieNames, predictions, recommended_movies, length)
+	print 
+	print '*****************************************************************'
+	print 
+	print 'THE LIST AFTER DIVERSIFICATION:'
+	printList(user_id, movieNames, predictions, new_rec_list, length)
+	
+
 def plotRMSE(errors):
 	plt.plot(errors[:,0], errors[:,1], linewidth=3, color='r')
 	plt.xlabel('Ranks')
@@ -402,7 +491,7 @@ def main():
 	
 
 	'''FIND THE SVD MODEL WITH THE BEST RANK WRT RMSE'''
-	
+	'''
 	# find the model with the best RMSE by cross-validation, normalizing with mean user ratings
 	# The lowest RMSE comes with rank 14 approximation with error 1.072588 
 
@@ -410,14 +499,14 @@ def main():
 	best_rank, best_RMSE, RMSE_list = get_best_RMSE_model_SVD(R_test, B_test, R_train_mean_movie, U, S, Vt, ranks)
 	print 'The lowest RMSE comes with rank %d approximation with error %f' %(best_rank, best_RMSE)
 	plotRMSE(np.c_[ranks, RMSE_list])
-	
+	'''
 		
 	'''PARAMETERS IN THE OPTIMAL MODEL'''
-	'''
+	
 	best_rank = 14
 	U, S, Vt = reduceRank(U, S, Vt, best_rank)
 	predictions_SVD = reduce(np.dot, [U, S, Vt]) + R_train_mean_movie
-	'''
+	
 
 			
 	''' INTERPRET SOME OF THE FEATURES'''
@@ -430,7 +519,7 @@ def main():
 
 	''' FIND THE SVD MODEL WITH THE BEST RANK WRT PRECISION'''
 	'''
-	# find the model with the best precision by cross-validation
+	# find the model with the best precision on the cross-validation set
 	ranks = np.arange(5,26)
 	best_rank, best_precision, precision_list = get_best_precision_model_SVD(R_test, B_test, U, S, Vt, R_train_mean_movie, ranks)
 	print 'The best mean precision comes with rank %d approximation with precision %.2f%%' %(best_rank, best_precision*100)
@@ -438,8 +527,9 @@ def main():
 	'''
 	
 	
-	''' COMPUTE NDCG'''
+	''' COMPUTE NORMALIZED DISCOUNTED CUMULATIVE GAIN (NDCG)'''
 	'''
+	# compute the NDCG on the test set
 	predictions = predictions_SVD
 	meanNDCG = computeNDCG(R_test, B_test, predictions)
 	print 'The normalized discounted cumulative gain of the model: %.3f' %meanNDCG
@@ -452,52 +542,15 @@ def main():
 	user_id = (np.argsort(U[:,6]))[::-1][0]		
 	new_rec_list = diversifyList(user_id, predictions, U, Vt.T)
 	recommended_movies = np.argsort(predictions[user_id])[::-1]
-	
-	print 'THE ORIGINAL LIST:'
-	printList(user_id, movieNames, predictions, recommended_movies, 10)
-	print 
-	print '*****************************************************************'
-	print 
-	print 'THE LIST AFTER DIVERSIFICATION:'
-	printList(user_id, movieNames, predictions, new_rec_list, 10)
+	printDiversifiedList(user_id, movieNames, predictions, recommended_movies, new_rec_list, 10)	
 	'''
-
+	
 	
 	''' PICK MOVIES FOR SERENDIPITY'''
 	'''
-	n = 30		# pick a movie outside the user's top n
-	m = 10		# consider top m movies of the neighbours for serendipity 
-	predictions = predictions_SVD
-	user_corr = np.corrcoef(U)
-	user_id = 10
-	recommended_movies = (np.argsort(predictions[user_id])[::-1])[:n]	
-	
-	# pick top 10 similar users to the given user
-	similar_users = (np.argsort(user_corr[user_id])[::-1])[1:11]
-
-	# search the top m recommendations of the neighbours to find movies
-	# that do not appear in the top n recommendations of the given user
-	additional_movies = {}
-	for neighbour in similar_users:
-		neighbour_movies = (np.argsort(predictions[neighbour])[::-1])[:m]	
-		difference = np.setdiff1d(neighbour_movies, recommended_movies)
-		for movie in difference:
-			additional_movies[movie] = max(predictions[user_id, movie] - R_train_mean_movie[movie], 0) * (predictions[user_id, difference[0]] >= 3.5)
-	
-	# print 'THE ORIGINAL LIST:'
-	printList(user_id, movieNames, predictions, recommended_movies, 10)
-	print 
-		
-	sorted_additional = sorted(additional_movies.items(), key=operator.itemgetter(1))
-	max_len = max(len(s) for s in [movieNames[sorted_additional[-1][0]], movieNames[sorted_additional[-2][0]], movieNames[sorted_additional[-3][0]] ])
-	print 
-	print 'Movies to create serendipity:'
-	print '******************************'	
-	print '%s	predicted rating:%.2f  		average movie rating:%.2f' %(movieNames[sorted_additional[-1][0]].ljust(max_len), predictions[user_id, sorted_additional[-1][0]], R_train_mean_movie[sorted_additional[-1][0]]) 
-	print '%s	predicted rating:%.2f 		average movie rating:%.2f' %(movieNames[sorted_additional[-2][0]].ljust(max_len), predictions[user_id, sorted_additional[-2][0]], R_train_mean_movie[sorted_additional[-2][0]]) 
-	print '%s	predicted rating:%.2f 		average movie rating:%.2f' %(movieNames[sorted_additional[-3][0]].ljust(max_len), predictions[user_id, sorted_additional[-3][0]], R_train_mean_movie[sorted_additional[-3][0]]) 
+	user_corr = np.corrcoef(U)		 	 # calculate the correlations between users
+	createSerendipity(predictions_SVD, user_corr, R_train_mean_movie, movieNames)
 	'''
-	
 
 	
 if __name__ == '__main__':
